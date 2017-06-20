@@ -7,18 +7,19 @@ int main(){
 	//FILE *in = fopen("input.txt", "r");
 	//FILE *out = fopen("output.txt", "w");
 
-	int TC;
-	scanf("%d", &TC);
+	long int TC;
 	
-	long a,b;
-	while(TC--){
-		scanf("%d %d", &a, &b);
-		if((long)a>(long)b){
-			cout << ">" << endl;
-		}else if((long)a<(long)b){
-			cout << "<" << endl;
-		}else{
-			cout << "=" << endl;
+	long int a,b;
+	while(scanf("%d", &TC)){
+		for(long int i=0; i< TC; i++){
+			scanf("%ld %ld", &a, &b);
+			if(a>b){
+				printf(">\n");
+			}else if(a<b){
+				printf("<\n");
+			}else{
+				printf("=\n");
+			}
 		}
 	}
 	return 0;
