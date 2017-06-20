@@ -10,7 +10,7 @@ int main(){
 	long int TC;
 	
 	long int a,b;
-	while(scanf("%d", &TC)){
+	while(scanf("%d", &TC) ==1){
 		for(long int i=0; i< TC; i++){
 			scanf("%ld %ld", &a, &b);
 			if(a>b){
