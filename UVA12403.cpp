@@ -9,12 +9,13 @@ int main(){
 	char command[10];
 	long int donations =0;
 	int k =0;
-	while(scanf("%s", command) != EOF){
-		if(strcmp(command, "donate")){
-			scanf("%d", k);
+	while(TC--){
+		scanf("%s", command);
+		if(strcmp(command, "donate") ==0){
+			scanf("%d", &k);
 			donations+=k;
 		}else{
-			printf("%d\n", donations);
+			printf("%ld\n", donations);
 		}
 	}
 }
