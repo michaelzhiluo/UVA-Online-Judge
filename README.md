@@ -1,7 +1,7 @@
 # UVA-Online-Judge
 
 Working off problems from Competitive Programming 3.
-Feel free to receive hints from my solutions or directly copy off of them.
+Feel free to receive hints from my solutions. Preferably don't copy off as it impedes learning.
 
 Java and C++ solutions.
 
