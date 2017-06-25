@@ -5,8 +5,7 @@ using namespace std;
 
 
 int main(){
-	int numbanks;
-	int numdebts;
+	int numbanks, numdebts;
 	up:
 	while(true){
 		scanf("%d %d", &numbanks, &numdebts);
