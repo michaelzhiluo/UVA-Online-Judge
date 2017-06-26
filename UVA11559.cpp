@@ -4,11 +4,7 @@
 using namespace std;
 
 int main(){
-	int numpeople;
-	int budget;
-	int numhotels;
-	int numweeks;
-	int mincost;
+	int numpeople, budget, numhotels, numweeks, mincost;
 	while(scanf("%d %d %d %d", &numpeople, &budget, &numhotels, &numweeks)!=EOF){
 		mincost = budget + 1;
 		for(int i=0; i<numhotels; i++){
