@@ -5,8 +5,7 @@ using namespace std;
 
 struct Book{
     char title[1000], author[1000]; 
-    bool operator < (Book& a)
-    {
+    bool operator < (Book& a){
         if(strcmp(title, a.title) !=0){
             return strcmp(title, a.title) <0;
         }
@@ -18,11 +17,13 @@ struct charcmp{
     bool operator()(char *a, char* b){
         return strcmp(a,b)<0;
     }
-};
+} temp;
+
 
 int main(){
     char input[2000], a[1000], t[1000];
     vector<Book> books;
+	vector<char*> returned;
     map<char*, bool, charcmp> exists;
     while(true){
         fgets (input, 2000, stdin);
@@ -53,16 +54,20 @@ int main(){
             exists[a] = false;
         }else if(!strcmp(t, "RETURN")){
             exists[a] = true;
+			char temp[1000];
+			strcpy(temp, a);
+			returned.push_back(temp);
         }else if(!strcmp(t, "SHELVE")){
-
+			sort(returned.begin(), returned.end(), temp);
+			for (int i = 0; i < returned.size(); i++) {
+				printf("%s\n", returned[i]);
+			}
+			printf("END\n");
         }
 
     }
     for(map<char*,bool>::iterator it=exists.begin(); it!=exists.end(); it++){
         cout << it->first << " => " << it->second << endl;
     }
-    printf("END\n");
-
-    
     return 0;
 }
