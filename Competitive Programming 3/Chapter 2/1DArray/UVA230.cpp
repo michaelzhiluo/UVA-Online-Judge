@@ -4,70 +4,77 @@
 using namespace std;
 
 struct Book{
-    char title[1000], author[1000]; 
+    string title, author; 
     bool operator < (Book& a){
-        if(strcmp(title, a.title) !=0){
-            return strcmp(title, a.title) <0;
+        if(author != a.author){
+            return author < a.author;
         }
-        return strcmp(author, a.author) < 0;
+        return title < a.title;
     }
 };
 
-struct charcmp{
-    bool operator()(char *a, char* b){
-        return strcmp(a,b)<0;
-    }
-} temp;
-
-
 int main(){
-    char input[2000], a[1000], t[1000];
+    ios_base::sync_with_stdio(0);
+    char a[1000], t[1000];
+    string input;
     vector<Book> books;
-	vector<char*> returned;
-    map<char*, bool, charcmp> exists;
-    while(true){
-        fgets (input, 2000, stdin);
-        if(strcmp(input, "END\n")==0){
+	vector<Book> returned;
+    map<string, bool> exists;
+    while(getline(cin, input)){
+        if(input == "END"){
             break;
         }
-        string input1 = string(input);
-        sscanf(input1.c_str(), "\"%[^\"]\" by %[^\n\r]", t, a);
+        sscanf(input.c_str(), "\"%[^\"]\" by %[^\n\r]", t, a);
         Book temp;
-        strcpy(temp.title, t);
-        strcpy(temp.author, a);
+        temp.title = string(t);
+        temp.author = string(a);
         books.push_back(temp);
     }
+
     sort(books.begin(), books.end());
 
     for(vector<Book>::iterator i = books.begin(); i!=books.end(); i++){
-        exists.insert(pair<char*, int>(i->title, true));
+        exists[i->title] = true;
     }
 
-    while(true){
-        fgets(input, 2000, stdin);
-        if(strcmp(input, "END\n") ==0){
+    while(getline(cin, input)){
+        if(input == "END"){
             break;
         }
-        string input1 = string(input);
-        sscanf(input1.c_str(), "%s \"%[^\"]\"", t, a);
-        if(!strcmp(t, "BORROW")){
-            exists[a] = false;
-        }else if(!strcmp(t, "RETURN")){
-            exists[a] = true;
-			char temp[1000];
-			strcpy(temp, a);
-			returned.push_back(temp);
-        }else if(!strcmp(t, "SHELVE")){
-			sort(returned.begin(), returned.end(), temp);
-			for (int i = 0; i < returned.size(); i++) {
-				printf("%s\n", returned[i]);
-			}
-			printf("END\n");
+        if(input[0] == 'B'){
+            sscanf(input.c_str(), "BORROW \"%[^\"]\"", a);
+            exists[string(a)] = false;
+        }else if(input[0] == 'R'){
+            sscanf(input.c_str(), "RETURN \"%[^\"]\"", a);
+            string temp = string(a);
+            for(int i=0; i<books.size(); i++){
+                if(books[i].title == temp){
+                    returned.push_back(books[i]);
+                    break;
+                }
+            }
+        }else if(input == "SHELVE"){
+			sort(returned.begin(), returned.end());
+            if(returned.size()!=0){
+                int counter =0;
+                foo:
+                for(int i=0; i<books.size(); i++){
+                    if(books[i].title == returned[counter].title){
+                        counter++;
+                        exists[books[i].title] = true;
+                        for(int j=i-1; j>=0; j--){
+                            if(exists[books[j].title]){
+                                printf("Put \"%s\" after \"%s\"\n", returned[counter-1].title.c_str(), books[j].title.c_str());
+                                goto foo;
+                            }
+                        }
+                        printf("Put \"%s\" first\n", returned[counter-1].title.c_str());
+                    }
+                }
+            }
+            printf("END\n");
+            returned.clear();
         }
-
-    }
-    for(map<char*,bool>::iterator it=exists.begin(); it!=exists.end(); it++){
-        cout << it->first << " => " << it->second << endl;
     }
     return 0;
 }
