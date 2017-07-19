@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(){ 
-   int n, works, num[10000], diff[10000];
+   int n, works, num[3000], diff[3000];
    while(scanf("%d",&n) == 1){ 
       for(int i = 0; i < n; i++){
          scanf("%d",&num[i]);
